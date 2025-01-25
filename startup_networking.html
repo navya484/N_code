@@ -6,39 +6,13 @@
     <title>Startup Networking</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/styles.css">
-</head>
-<body>
-    <header>
-        <h1>Join the Startup Revolution</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/profile">Profile</a>
-            <a href="/startup-networking">Startup Networking</a>
-        </nav>
-    </header>
-
-    <section class="startups">
-        <h2>Startups Looking for Collaborators</h2>
-        <div id="startup-list" class="startup-list"></div>
-    </section>
-
-    <section class="collaborative-boards">
-        <h2>Collaborative Boards</h2>
-        <button id="join-board">Join a Collaborative Board</button>
-        <div id="boards-list" class="boards-list"></div>
-    </section>
-
-    <footer>
-        &copy; 2025 Empower Women Entrepreneurs. All rights reserved.
-    </footer>
-
     <style>
         body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f8f9fa;
-        color: #4bc6b9;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #4bc6b9;
         }
 
         header {
@@ -112,7 +86,114 @@
             color: white;
         }
 
+        .joined-startups, .requested-startups {
+            margin-top: 20px;
+        }
+
+        .startup-item {
+            background-color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px;
+            border: 1px solid #ddd;
+        }
+
     </style>
-    <script src="/static/script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Join the Startup Revolution</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/userprofile.html">Profile</a>
+        </nav>
+    </header>
+
+    <section class="startups">
+        <h2>Startups Looking for Collaborators</h2>
+        <div id="startup-list" class="startup-list">
+            <!-- Dynamically generate startup cards -->
+            <div class="startup-card">
+                <h3>Tech Innovators</h3>
+                <p>A tech startup focusing on AI-driven solutions for healthcare.</p>
+                <button class="join-startup" data-startup="Tech Innovators">Join Request</button>
+            </div>
+            <div class="startup-card">
+                <h3>Green Solutions</h3>
+                <p>A sustainability startup aiming to revolutionize waste management.</p>
+                <button class="join-startup" data-startup="Green Solutions">Join Request</button>
+            </div>
+            <div class="startup-card">
+                <h3>HealthCare 360</h3>
+                <p>Startup focused on creating innovative healthcare applications.</p>
+                <button class="join-startup" data-startup="HealthCare 360">Join Request</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="collaborative-boards">
+        <h2>Collaborative Boards</h2>
+        <button id="join-board">Join a Collaborative Board</button>
+        <div id="boards-list" class="boards-list">
+            <div class="board-card">
+                <h3>Tech Innovators Board</h3>
+                <p>Collaborate with professionals in the tech field to drive innovation.</p>
+                <button class="join-board-button">Join Board</button>
+            </div>
+            <div class="board-card">
+                <h3>Sustainability Innovators Board</h3>
+                <p>A place for sustainability experts to collaborate on projects.</p>
+                <button class="join-board-button">Join Board</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="joined-startups">
+        <h2>Your Joined Startups</h2>
+        <div id="joined-startups-list">
+            <!-- Joined startups will be displayed here dynamically -->
+        </div>
+    </section>
+
+    <section class="requested-startups">
+        <h2>Your Requested Startups</h2>
+        <div id="requested-startups-list">
+            <!-- Requested startups will be displayed here dynamically -->
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2025 Empower Women Entrepreneurs. All rights reserved.
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const joinStartupButtons = document.querySelectorAll(".join-startup");
+            const joinBoardButton = document.getElementById("join-board");
+
+            // Handle joining startups
+            joinStartupButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const startupName = button.getAttribute("data-startup");
+                    const requestedList = document.getElementById("requested-startups-list");
+                    const joinedStartups = document.getElementById("joined-startups-list");
+                    
+                    // Add to requested list
+                    const requestItem = document.createElement("div");
+                    requestItem.classList.add("startup-item");
+                    requestItem.textContent = `Requested: ${startupName}`;
+                    requestedList.appendChild(requestItem);
+
+                    // Remove from available list
+                    button.parentElement.remove();
+                });
+            });
+
+            // Handle joining collaborative boards
+            joinBoardButton.addEventListener("click", function () {
+                alert("You have joined a collaborative board!");
+            });
+        });
+    </script>
 </body>
 </html>
