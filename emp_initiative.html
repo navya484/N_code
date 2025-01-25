@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women Empowerment Initiatives</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Women Empowerment Initiatives</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/profile">Profile</a>
+            <a href="/empowerment-initiatives">Empowerment Initiatives</a>
+        </nav>
+    </header>
+
+    <section class="initiatives">
+        <h2>Available Initiatives</h2>
+        <div id="initiatives-list" class="initiatives-list">
+            <!-- Initiatives will be dynamically added here -->
+        </div>
+    </section>
+
+    <section class="event-calendar">
+        <h2>Upcoming Events</h2>
+        <div id="events-list" class="events-list">
+            <!-- Events will be dynamically added here -->
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2025 Empower Women Entrepreneurs. All rights reserved.
+    </footer>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #4bc6b9;
+        }
+
+        header {
+            background: linear-gradient(to right, #4bc6b9, #b19cd9);
+            color: white;
+            padding: 20px 10%;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            margin-top: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            color: #b19cd9;
+        }
+
+        .initiatives, .event-calendar {
+            padding: 40px 10%;
+        }
+
+        .initiatives h2, .event-calendar h2 {
+            font-size: 2rem;
+            color: #4bc6b9;
+        }
+
+        .initiatives-list, .events-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .initiative-card, .event-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .cta-btn {
+            background-color: #4bc6b9;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .cta-btn:hover {
+            background-color: #3aa89b;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #4bc6b9;
+            color: white;
+        }
+    </style>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
