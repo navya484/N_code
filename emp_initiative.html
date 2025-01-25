@@ -13,21 +13,59 @@
         <nav>
             <a href="/">Home</a>
             <a href="/profile">Profile</a>
-            <a href="/empowerment-initiatives">Empowerment Initiatives</a>
+
         </nav>
     </header>
 
     <section class="initiatives">
         <h2>Available Initiatives</h2>
         <div id="initiatives-list" class="initiatives-list">
-            <!-- Initiatives will be dynamically added here -->
+            <!-- Initiative 1 -->
+            <div class="initiative-card">
+                <h3>Leadership Workshops for Women</h3>
+                <p>Join our workshops designed to empower women leaders with the skills to thrive in any professional setting.</p>
+                <a href="/leadership-workshop" class="cta-btn">Learn More</a>
+            </div>
+
+            <!-- Initiative 2 -->
+            <div class="initiative-card">
+                <h3>Entrepreneurship Bootcamp</h3>
+                <p>Develop your entrepreneurial skills and learn how to start and grow your own business in a supportive environment.</p>
+                <a href="/entrepreneurship-bootcamp" class="cta-btn">Join Now</a>
+            </div>
+
+            <!-- Initiative 3 -->
+            <div class="initiative-card">
+                <h3>Women in Tech Networking</h3>
+                <p>A networking event connecting women working in technology, fostering collaboration and mentorship opportunities.</p>
+                <a href="/women-in-tech" class="cta-btn">Join Event</a>
+            </div>
         </div>
     </section>
 
     <section class="event-calendar">
         <h2>Upcoming Events</h2>
         <div id="events-list" class="events-list">
-            <!-- Events will be dynamically added here -->
+            <!-- Event 1 -->
+            <div class="event-card">
+                <h3>Global Women Entrepreneurship Summit</h3>
+                <p>A global summit bringing together female entrepreneurs from all over the world to share insights, strategies, and success stories.</p>
+                <a href="/global-summit" class="cta-btn">Register Now</a>
+            </div>
+
+            <!-- Event 2 -->
+            <div class="event-card">
+                <h3>Women Empowerment Gala</h3>
+                <p>An evening to celebrate the achievements of women in various fields, with keynote speakers and awards.</p>
+                <a href="/empowerment-gala" class="cta-btn">Get Tickets</a>
+            </div>
+
+            <!-- Event 3 -->
+            <div class="event-card">
+                <h3>Career Development Workshop</h3>
+                <p>This workshop focuses on career growth strategies, CV building, and interview preparation to help women succeed in their careers.</p>
+                <a href="/career-development" class="cta-btn">Sign Up</a>
+            </div>
         </div>
     </section>
 
@@ -116,14 +154,5 @@
             color: white;
         }
     </style>
-
-    <script>
-        // Check if the user is logged in
-        if (localStorage.getItem('loggedIn') !== 'true') {
-            window.location.href = 'login.html'; // Redirect to login page if not logged in
-        }
-    </script>
-
-
 </body>
 </html>

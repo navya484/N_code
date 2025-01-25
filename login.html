@@ -183,39 +183,5 @@
     </div>
 </div>
 
-<script>
-    // Dummy user credentials
-    const validCredentials = {
-        username: 'user123',
-        password: 'password123'
-    };
-
-    function login() {
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        const errorMessage = document.getElementById('error-message');
-
-        // Check if credentials match
-        if (username === validCredentials.username && password === validCredentials.password) {
-            // Successful login, redirect to the home page or desired page
-            localStorage.setItem('loggedIn', 'true');
-            window.location.href = 'index.html';  // You can redirect to any page after login
-            return false;  // Prevent the form from submitting
-        } else {
-            // Display error message
-            errorMessage.textContent = 'Invalid username or password.';
-            errorMessage.style.display = 'block';
-            return false;  // Prevent the form from submitting
-        }
-    }
-
-    window.onload = function() {
-        // If the user is already logged in, redirect them directly to index
-        if (localStorage.getItem('loggedIn') === 'true') {
-            window.location.href = 'index.html';
-        }
-    };
-</script>
-
 </body>
 </html>

@@ -6,39 +6,13 @@
     <title>Startup Networking</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/styles.css">
-</head>
-<body>
-    <header>
-        <h1>Join the Startup Revolution</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/profile">Profile</a>
-            <a href="/startup-networking">Startup Networking</a>
-        </nav>
-    </header>
-
-    <section class="startups">
-        <h2>Startups Looking for Collaborators</h2>
-        <div id="startup-list" class="startup-list"></div>
-    </section>
-
-    <section class="collaborative-boards">
-        <h2>Collaborative Boards</h2>
-        <button id="join-board">Join a Collaborative Board</button>
-        <div id="boards-list" class="boards-list"></div>
-    </section>
-
-    <footer>
-        &copy; 2025 Empower Women Entrepreneurs. All rights reserved.
-    </footer>
-
     <style>
         body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f8f9fa;
-        color: #4bc6b9;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #4bc6b9;
         }
 
         header {
@@ -111,8 +85,46 @@
             background-color: #4bc6b9;
             color: white;
         }
-
     </style>
+</head>
+<body>
+    <header>
+        <h1>Join the Startup Revolution</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/userprofile.html">Profile</a>
+        </nav>
+    </header>
+
+    <section class="startups">
+        <h2>Startups Looking for Collaborators</h2>
+        <div id="startup-list" class="startup-list">
+        
+                <div class="startup-card">
+                    <h3>{{ startup.name }}</h3>
+                    <p>{{ startup.description }}</p>
+                </div>
+            
+        </div>
+    </section>
+
+    <section class="collaborative-boards">
+        <h2>Collaborative Boards</h2>
+        <button id="join-board">Join a Collaborative Board</button>
+        <div id="boards-list" class="boards-list">
+            
+                <div class="board-card">
+                    <h3>{{ board.title }}</h3>
+                    <p>{{ board.description }}</p>
+                </div>
+            
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2025 Empower Women Entrepreneurs. All rights reserved.
+    </footer>
+
     <script src="/static/script.js"></script>
 </body>
 </html>
