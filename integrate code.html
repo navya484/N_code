@@ -1,0 +1,108 @@
+from flask import Flask, render_template, jsonify, request
+
+app = Flask(__name__)
+
+# Sample event data (you can later connect to a database)
+events_data = [
+    {
+        "id": 1,
+        "name": "Women Entrepreneurs Meetup",
+        "date": "2025-02-10",
+        "location": "Online",
+        "description": "An online meetup for women entrepreneurs to connect and share ideas."
+    },
+    {
+        "id": 2,
+        "name": "Startup Networking in NYC",
+        "date": "2025-03-15",
+        "location": "New York",
+        "description": "A networking event for women entrepreneurs in the startup ecosystem in NYC."
+    },
+    {
+        "id": 3,
+        "name": "Tech Talks in San Francisco",
+        "date": "2025-04-10",
+        "location": "San Francisco",
+        "description": "A networking event focused on tech for women entrepreneurs in SF."
+    },
+    {
+        "id": 4,
+        "name": "Global Women Entrepreneurs Conference",
+        "date": "2025-05-20",
+        "location": "London",
+        "description": "A global conference for women entrepreneurs with keynote speakers and workshops."
+    },
+]
+
+# Routes for various pages
+@app.route('/')
+def home():
+    return render_template('index.html')  # Render the main HTML page
+
+@app.route('/join')
+def join():
+    return render_template('join.html')  # Create this page for joining
+
+@app.route('/learn')
+def learn():
+    return render_template('learn.html')  # Create this page for more information
+
+@app.route('/sponsors')
+def sponsors():
+    return render_template('sponsors.html')  # Create this page for sponsors
+
+@app.route('/userprofile')
+def profile():
+    return render_template('userprofile.html')  # Create this page for the user profile
+
+# Event listing page
+@app.route('/events')
+def events():
+    return render_template('networking_events.html', events=events_data)  # Pass event data to template
+
+# API endpoint to fetch events based on search criteria
+@app.route('/api/events', methods=['GET'])
+def get_events():
+    # Extract search query parameters
+    keyword = request.args.get('keyword', '')
+    location = request.args.get('location', '')
+    date = request.args.get('date', '')
+
+    # Filter events based on query parameters
+    filtered_events = events_data
+
+    if keyword:
+        filtered_events = [event for event in filtered_events if keyword.lower() in event['name'].lower() or keyword.lower() in event['description'].lower()]
+
+    if location:
+        filtered_events = [event for event in filtered_events if location.lower() in event['location'].lower()]
+
+    if date:
+        filtered_events = [event for event in filtered_events if date in event['date']]
+
+    # Return filtered events as JSON response
+    return jsonify(filtered_events)
+
+# Route for event registration (with GET and POST methods)
+@app.route('/register/<int:event_id>', methods=['GET', 'POST'])
+def register(event_id):
+    # Find the event using the event_id
+    event = next((event for event in events_data if event['id'] == event_id), None)
+    
+    if event is None:
+        return "Event not found", 404
+
+    if request.method == 'POST':
+        # Extract form data (you can store this in a database or process it)
+        name = request.form.get('name')
+        email = request.form.get('email')
+
+        # Process the registration (e.g., save to database or send confirmation)
+        return f"Thank you {name} for registering for {event['name']}!"
+
+    return render_template('register.html', event_name=event['name'], event_id=event['id'])
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
