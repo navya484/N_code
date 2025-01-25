@@ -12,7 +12,7 @@
         <h1>Empower Women Entrepreneurs</h1>
         <nav>
             <a href="/">Home</a>
-            <a href="/profile">Profile</a>
+            <a href="/userprofile.html">Profile</a>
             <a href="/sponsorship_finder.html">Find Sponsors</a>
         </nav>
     </header>
@@ -27,9 +27,9 @@
         <div class="profile-details">
             <h3>Skills</h3>
             <ul>
-                {% for skill in user.skills %}
+                
                     <li>{{ skill }}</li>
-                {% endfor %}
+                {
             </ul>
 
             <h3>Business Details</h3>
@@ -37,9 +37,9 @@
 
             <h3>Achievements</h3>
             <ul>
-                {% for achievement in user.achievements %}
+                
                     <li>{{ achievement }}</li>
-                {% endfor %}
+                
             </ul>
 
             <h3>Contact Info</h3>
@@ -48,9 +48,9 @@
             
             <h3>Social Media</h3>
             <ul class="social-links">
-                {% for link in user.social_links %}
+               
                     <li><a href="{{ link }}" target="_blank">{{ link }}</a></li>
-                {% endfor %}
+                
             </ul>
         </div>
     </section>

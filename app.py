@@ -1,7 +1,19 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+import mysql.connector
+from flask import Flask, request, jsonify, render_template, redirect, url_for, flash, session
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Needed for flash messages
+
+# Database connection
+def get_db_connection():
+    connection = mysql.connector.connect(
+        host="localhost",           # Replace with your database host
+        user="root",       # Replace with your database username
+        password="root123",   # Replace with your database password
+        database="empower_women"    # Replace with your database name
+    )
+    return connection
 
 # Sample data for available initiatives and events
 initiatives = [
@@ -72,10 +84,21 @@ def index():
     username = session.get("username")
     return render_template("index.html", username=username)
 
+@app.route('/startups_networking')
+def startups_networking():
+    # Example startups and boards data
+    startups = [
+        {"name": "Tech Innovators", "description": "A tech startup focusing on AI-driven solutions for healthcare."},
+        {"name": "Green Solutions", "description": "A sustainability startup aiming to revolutionize waste management."},
+        {"name": "HealthCare 360", "description": "Startup focused on creating innovative healthcare applications."}
+    ]
+    
+    boards = [
+        {"name": "Tech Innovators Board", "description": "Collaborate with professionals in the tech field to drive innovation."},
+        {"name": "Sustainability Innovators Board", "description": "A place for sustainability experts to collaborate on projects."}
+    ]
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+    return render_template('startups_networking.html', startups=startups, boards=boards)
 
 @app.route("/userprofile")
 def user_profile():
@@ -95,22 +118,6 @@ def user_profile():
     }
     return render_template('userprofile.html', user=user)
 
-@app.route('/startups_networking')
-def startups_networking():
-    # Example startups and boards data
-    startups = [
-        {"name": "Tech Innovators", "description": "A tech startup focusing on AI-driven solutions for healthcare."},
-        {"name": "Green Solutions", "description": "A sustainability startup aiming to revolutionize waste management."},
-        {"name": "HealthCare 360", "description": "Startup focused on creating innovative healthcare applications."}
-    ]
-    
-    boards = [
-        {"name": "Tech Innovators Board", "description": "Collaborate with professionals in the tech field to drive innovation."},
-        {"name": "Sustainability Innovators Board", "description": "A place for sustainability experts to collaborate on projects."}
-    ]
-
-    return render_template('startups_networking.html', startups=startups, boards=boards)
-
 @app.route("/sponsorship_finder", methods=["GET", "POST"])
 def sponsorship_finder():
     if request.method == "POST":
@@ -118,11 +125,19 @@ def sponsorship_finder():
         region = request.form.get("region")
         funding_stage = request.form.get("funding_stage")
         goals = request.form.get("goals")
-        matched_sponsors = [
-            sponsor for sponsor in sponsors
-            if sponsor["industry"] == industry and sponsor["region"] == region and sponsor["funding_stage"] == funding_stage
-        ]
+        
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute(
+            "SELECT * FROM sponsorships WHERE industry=%s AND region=%s AND funding_stage=%s",
+            (industry, region, funding_stage)
+        )
+        matched_sponsors = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        
         return jsonify({"matches": matched_sponsors})
+    
     return render_template("sponsorship_finder.html")
 
 # Sample events data
@@ -197,30 +212,6 @@ def get_events():
             return jsonify({"error": "Invalid date format. Please use YYYY-MM-DD."}), 400
 
     return jsonify(filtered_events)
-
-# Sample mentorship data
-mentorships = [
-    {"mentor": "Dr. Alice Johnson", "field": "Technology", "description": "Helping women excel in tech careers."},
-    {"mentor": "Ms. Rachel Green", "field": "Entrepreneurship", "description": "Guidance on starting and scaling a business."},
-    {"mentor": "Mrs. Emily Davis", "field": "Marketing", "description": "Expert advice on digital marketing strategies."}
-]
-
-@app.route("/mentorship")
-def mentorship():
-    return render_template(
-        "mentorship.html",
-        mentorships=mentorships,
-        joined_mentorships=user_data["joined_mentorships"]
-    )
-
-@app.route("/join_mentorship", methods=["POST"])
-def join_mentorship():
-    mentor_name = request.form.get("mentor_name")
-    if mentor_name and mentor_name not in user_data["joined_mentorships"]:
-        user_data["joined_mentorships"].append(mentor_name)
-        flash(f"You have joined the mentorship program with {mentor_name}.", "success")
-    return redirect(url_for("mentorship"))
-
 
 if __name__ == "__main__":
     app.run(debug=True)

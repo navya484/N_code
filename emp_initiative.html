@@ -13,7 +13,6 @@
         <nav>
             <a href="/">Home</a>
             <a href="/profile">Profile</a>
-
         </nav>
     </header>
 
@@ -24,21 +23,21 @@
             <div class="initiative-card">
                 <h3>Leadership Workshops for Women</h3>
                 <p>Join our workshops designed to empower women leaders with the skills to thrive in any professional setting.</p>
-                <a href="/leadership-workshop" class="cta-btn">Learn More</a>
+                <a href="javascript:void(0);" class="cta-btn" onclick="joinEvent('Leadership Workshops for Women')">Learn More</a>
             </div>
 
             <!-- Initiative 2 -->
             <div class="initiative-card">
                 <h3>Entrepreneurship Bootcamp</h3>
                 <p>Develop your entrepreneurial skills and learn how to start and grow your own business in a supportive environment.</p>
-                <a href="/entrepreneurship-bootcamp" class="cta-btn">Join Now</a>
+                <a href="javascript:void(0);" class="cta-btn" onclick="joinEvent('Entrepreneurship Bootcamp')">Join Now</a>
             </div>
 
             <!-- Initiative 3 -->
             <div class="initiative-card">
                 <h3>Women in Tech Networking</h3>
                 <p>A networking event connecting women working in technology, fostering collaboration and mentorship opportunities.</p>
-                <a href="/women-in-tech" class="cta-btn">Join Event</a>
+                <a href="javascript:void(0);" class="cta-btn" onclick="joinEvent('Women in Tech Networking')">Join Event</a>
             </div>
         </div>
     </section>
@@ -50,23 +49,30 @@
             <div class="event-card">
                 <h3>Global Women Entrepreneurship Summit</h3>
                 <p>A global summit bringing together female entrepreneurs from all over the world to share insights, strategies, and success stories.</p>
-                <a href="/global-summit" class="cta-btn">Register Now</a>
+                <a href="javascript:void(0);" class="cta-btn" onclick="joinEvent('Global Women Entrepreneurship Summit')">Register Now</a>
             </div>
 
             <!-- Event 2 -->
             <div class="event-card">
                 <h3>Women Empowerment Gala</h3>
                 <p>An evening to celebrate the achievements of women in various fields, with keynote speakers and awards.</p>
-                <a href="/empowerment-gala" class="cta-btn">Get Tickets</a>
+                <a href="javascript:void(0);" class="cta-btn" onclick="joinEvent('Women Empowerment Gala')">Get Tickets</a>
             </div>
 
             <!-- Event 3 -->
             <div class="event-card">
                 <h3>Career Development Workshop</h3>
                 <p>This workshop focuses on career growth strategies, CV building, and interview preparation to help women succeed in their careers.</p>
-                <a href="/career-development" class="cta-btn">Sign Up</a>
+                <a href="javascript:void(0);" class="cta-btn" onclick="joinEvent('Career Development Workshop')">Sign Up</a>
             </div>
         </div>
+    </section>
+
+    <section class="joined-events">
+        <h2>Currently Joined Events</h2>
+        <ul id="joined-events-list">
+            <!-- Dynamically filled with joined events -->
+        </ul>
     </section>
 
     <footer>
@@ -147,6 +153,30 @@
             background-color: #3aa89b;
         }
 
+        .joined-events {
+            padding: 40px 10%;
+            background-color: #e7f5f2;
+            margin-top: 40px;
+        }
+
+        .joined-events h2 {
+            font-size: 2rem;
+            color: #4bc6b9;
+        }
+
+        #joined-events-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #joined-events-list li {
+            background-color: #ffffff;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
         footer {
             text-align: center;
             padding: 20px;
@@ -154,5 +184,29 @@
             color: white;
         }
     </style>
+
+    <script>
+        // Initialize an empty array to store joined events
+        let joinedEvents = [];
+
+        // Function to handle event joining
+        function joinEvent(eventName) {
+            if (!joinedEvents.includes(eventName)) {
+                joinedEvents.push(eventName);
+                displayJoinedEvents();
+            }
+        }
+
+        // Function to display currently joined events
+        function displayJoinedEvents() {
+            const joinedEventsList = document.getElementById('joined-events-list');
+            joinedEventsList.innerHTML = ''; // Clear the list before re-adding items
+            joinedEvents.forEach(event => {
+                const listItem = document.createElement('li');
+                listItem.textContent = event;
+                joinedEventsList.appendChild(listItem);
+            });
+        }
+    </script>
 </body>
 </html>

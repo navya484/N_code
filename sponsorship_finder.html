@@ -6,6 +6,95 @@
     <title>Sponsorship Finder</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #4bc6b9;
+        }
+
+        header {
+            background: linear-gradient(to right, #4bc6b9, #b19cd9);
+            color: white;
+            padding: 20px 10%;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            margin-top: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            color: #b19cd9;
+        }
+
+        .matchmaking {
+            padding: 40px 10%;
+        }
+
+        .matchmaking form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .matchmaking label {
+            font-weight: bold;
+        }
+
+        .matchmaking select, .matchmaking input, .matchmaking textarea {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        button {
+            background-color: #4bc6b9;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3aa89b;
+        }
+
+        .matches {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .match {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #4bc6b9;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -15,96 +104,6 @@
             <a href="/userprofile.html">Profile</a>
         </nav>
     </header>
-<style>
-        body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa;
-    color: #4bc6b9;
-    }
-
-    header {
-        background: linear-gradient(to right, #4bc6b9, #b19cd9);
-        color: white;
-        padding: 20px 10%;
-        text-align: center;
-    }
-
-    header h1 {
-        margin: 0;
-    }
-
-    nav {
-        margin-top: 20px;
-    }
-
-    nav a {
-        text-decoration: none;
-        color: white;
-        margin: 0 10px;
-    }
-
-    nav a:hover {
-        color: #b19cd9;
-    }
-
-    .matchmaking {
-        padding: 40px 10%;
-    }
-
-    .matchmaking form {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .matchmaking label {
-        font-weight: bold;
-    }
-
-    .matchmaking select, .matchmaking input, .matchmaking textarea {
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        width: 100%;
-    }
-
-    button {
-        background-color: #4bc6b9;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #3aa89b;
-    }
-
-    .matches {
-        margin-top: 30px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .match {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-    }
-
-    footer {
-        text-align: center;
-        padding: 20px;
-        background-color: #4bc6b9;
-        color: white;
-    }
-
-</style>
 
     <section class="matchmaking">
         <h2>Enter Your Business Goals</h2>
@@ -145,6 +144,56 @@
         &copy; 2025 Empower Women Entrepreneurs. All rights reserved.
     </footer>
 
-    <script src="/static/script.js"></script>
+    <script>
+        document.getElementById('sponsorship-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Collect form data
+            const industry = document.getElementById('industry').value;
+            const region = document.getElementById('region').value;
+            const funding_stage = document.getElementById('funding_stage').value;
+            const goals = document.getElementById('goals').value;
+
+            // Send data to Flask via AJAX
+            fetch('/sponsorship_finder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    industry: industry,
+                    region: region,
+                    funding_stage: funding_stage,
+                    goals: goals
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const matchesContainer = document.getElementById('sponsor-matches');
+                matchesContainer.innerHTML = '';  // Clear previous results
+
+                if (data.matches.length > 0) {
+                    data.matches.forEach(match => {
+                        const matchDiv = document.createElement('div');
+                        matchDiv.classList.add('match');
+                        matchDiv.innerHTML = `
+                            <h3>${match.name}</h3>
+                            <p>${match.description}</p>
+                            <p><strong>Industry:</strong> ${match.industry}</p>
+                            <p><strong>Region:</strong> ${match.region}</p>
+                            <p><strong>Funding Stage:</strong> ${match.funding_stage}</p>
+                        `;
+                        matchesContainer.appendChild(matchDiv);
+                    });
+                } else {
+                    matchesContainer.innerHTML = '<p>No matches found.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+
 </body>
 </html>
