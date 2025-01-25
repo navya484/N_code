@@ -5,6 +5,145 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mentorship Programs</title>
     <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(to right, #4bc6b9, #b19cd9);
+            color: white;
+            padding: 20px 5%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            margin: 0 15px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ffe4e1;
+        }
+
+        .mentorship-section,
+        .learning-hub {
+            padding: 40px 5%;
+            text-align: center;
+            background-color: #ffffff;
+            border-radius: 10px;
+            margin: 20px 10%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .mentorship-section:hover,
+        .learning-hub:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .mentorship-section h2,
+        .learning-hub h2 {
+            font-size: 2rem;
+            color: #4bc6b9;
+            margin-bottom: 15px;
+        }
+
+        .mentorship-section p,
+        .learning-hub p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .cta-btn {
+            background-color: #4bc6b9;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .cta-btn:hover {
+            background-color: #3aa89b;
+            transform: scale(1.05);
+        }
+
+        .resources-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .resource-card h3 {
+            font-size: 1.5rem;
+            color: #4bc6b9;
+            margin-bottom: 10px;
+        }
+
+        .resource-card p {
+            color: #555;
+            font-size: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #4bc6b9;
+            color: white;
+            font-size: 1rem;
+            margin-top: 40px;
+        }
+
+        footer a {
+            color: #ffe4e1;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -14,97 +153,7 @@
             <a href="/mentorship">Mentorship</a>
         </nav>
     </header>
-    <style>
-        body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f8f9fa;
-                color: #4bc6b9;
-            }
 
-            header {
-                background: linear-gradient(to right, #4bc6b9, #b19cd9);
-                color: white;
-                padding: 20px 10%;
-                text-align: center;
-            }
-
-            header h1 {
-                margin: 0;
-            }
-
-            nav {
-                margin-top: 10px;
-            }
-
-            nav a {
-                text-decoration: none;
-                color: white;
-                margin: 0 15px;
-                font-weight: bold;
-            }
-
-            nav a:hover {
-                color: #b19cd9;
-            }
-
-            .mentorship-section, .learning-hub {
-                padding: 40px 10%;
-                text-align: center;
-            }
-
-            .mentorship-section h2, .learning-hub h2 {
-                font-size: 2rem;
-                margin-bottom: 10px;
-                color: #4bc6b9;
-            }
-
-            .mentorship-section p, .learning-hub p {
-                font-size: 1.2rem;
-                margin-bottom: 20px;
-            }
-
-            .cta-btn {
-                background-color: #4bc6b9;
-                color: white;
-                padding: 10px 20px;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 1rem;
-            }
-
-            .cta-btn:hover {
-                background-color: #3aa89b;
-            }
-
-            .resources-list {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 20px;
-                justify-content: center;
-                margin-top: 20px;
-            }
-
-            .resource-card {
-                background: white;
-                border-radius: 10px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                padding: 20px;
-                width: 250px;
-                text-align: center;
-            }
-
-            footer {
-                text-align: center;
-                padding: 20px;
-                background-color: #4bc6b9;
-                color: white;
-                margin-top: 40px;
-            }
-
-    </style>
     <section class="mentorship-section">
         <h2>One-on-One Mentorship</h2>
         <p>Match entrepreneurs with experienced mentors based on expertise and goals.</p>
@@ -121,13 +170,33 @@
         <h2>Learning Hub</h2>
         <p>Explore free and premium resources like e-books, podcasts, and video lessons on business strategies.</p>
         <button class="cta-btn" id="learning-hub-btn">Access Resources</button>
-        <div id="resources-list" class="resources-list"></div>
+        <div id="resources-list" class="resources-list">
+            <div class="resource-card">
+                <h3>E-book: Startup Essentials</h3>
+                <p>A complete guide to starting and growing your business.</p>
+            </div>
+            <div class="resource-card">
+                <h3>Podcast: Women in Business</h3>
+                <p>Inspirational stories from successful women entrepreneurs.</p>
+            </div>
+            <div class="resource-card">
+                <h3>Video Series: Pitch Perfect</h3>
+                <p>Learn how to pitch your ideas to investors with confidence.</p>
+            </div>
+        </div>
     </section>
 
     <footer>
-        &copy; 2025 Women Empowerment Initiative. All rights reserved.
+        &copy; 2025 Women Empowerment Initiative. All rights reserved. 
+        <a href="/terms">Terms of Service</a> | 
+        <a href="/privacy">Privacy Policy</a>
     </footer>
 
-    <script src="/static/script.js"></script>
+    <script>
+        // Placeholder for dynamic content or navigation handling
+        document.getElementById('one-on-one-btn').onclick = () => alert('Redirecting to One-on-One Mentorship page...');
+        document.getElementById('group-mentorship-btn').onclick = () => alert('Redirecting to Group Mentorship Sessions page...');
+        document.getElementById('learning-hub-btn').onclick = () => alert('Redirecting to Learning Hub...');
+    </script>
 </body>
 </html>
