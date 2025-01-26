@@ -134,3 +134,5 @@ CREATE TABLE board_participants (
     FOREIGN KEY (board_id) REFERENCES collaborative_boards(board_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
+
+;
