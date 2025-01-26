@@ -1,6 +1,8 @@
 import mysql.connector
 from flask import Flask, request, jsonify, render_template, redirect, url_for, flash, session
 from datetime import datetime
+from werkzeug.security import check_password_hash
+
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Needed for flash messages
@@ -60,23 +62,85 @@ def join_event():
         flash(f"You have joined the event: {event_name}.", "success")
     return redirect(url_for("emp_initiative"))
 
-@app.route("/login.html", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
 
-        # Validate credentials
-        if username == "admin" and password == "admin123":
+        # Connect to the database
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        # Query to check if the user exists in the database
+        cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+        user = cursor.fetchone()  # Get the first result (if any)
+
+        cursor.close()
+        conn.close()
+
+        # If the user exists and the password matches
+        if user and check_password_hash(user['password'], password):
             session["logged_in"] = True
             session["username"] = username
             flash("Login successful!", "success")
-            return redirect(url_for("index"))
+            return redirect("index.html")  # Redirect to the homepage (index.html)
         else:
             flash("Invalid username or password.", "error")
-            return redirect(url_for("login"))
+            return redirect("login.html")  # Stay on the login page if credentials are incorrect
 
     return render_template("login.html")
+
+# Registration route
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        # Collect form data
+        user_id = request.form["userid"]
+        name = request.form["name"]
+        password = request.form["password"]
+        skills = request.form["skills"]
+        user_about = request.form["user_about"]
+        business_details = request.form["business_details"]
+        achievement = request.form["achievement"]
+        contact_info = request.form["contact_info"]
+        industry = request.form["industry"]
+        social_media = request.form["social_media"]
+
+        # Hash the password
+        hashed_password = generate_password_hash(password)
+
+        # Connect to the database
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Check if the user already exists
+        cursor.execute("SELECT * FROM users WHERE user_id = %s", (user_id,))
+        existing_user = cursor.fetchone()
+
+        if existing_user:
+            flash("User ID already exists. Please choose another one.", "error")
+            return redirect("/register")
+
+        # Insert the new user data into the database
+        cursor.execute(
+            """INSERT INTO users (user_id, name, password, skills, user_about, business_details, 
+                                   achievement, contact_info, industry, social_media) 
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+            (user_id, name, hashed_password, skills, user_about, business_details, achievement, 
+             contact_info, industry, social_media)
+        )
+
+        # Commit the transaction
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        flash("Registration successful! You can now log in.", "success")
+        return redirect("/login")
+
+    return render_template("register.html")
 
 @app.route("/")
 def index():
@@ -84,7 +148,8 @@ def index():
     username = session.get("username")
     return render_template("index.html", username=username)
 
-@app.route('/startups_networking')
+
+@app.route('/startup_networking')
 def startups_networking():
     # Example startups and boards data
     startups = [
@@ -98,7 +163,9 @@ def startups_networking():
         {"name": "Sustainability Innovators Board", "description": "A place for sustainability experts to collaborate on projects."}
     ]
 
-    return render_template('startups_networking.html', startups=startups, boards=boards)
+    return render_template('startup_networking.html')
+
+
 
 @app.route("/userprofile")
 def user_profile():
@@ -212,6 +279,34 @@ def get_events():
             return jsonify({"error": "Invalid date format. Please use YYYY-MM-DD."}), 400
 
     return jsonify(filtered_events)
+
+@app.route('/mentorship')
+def mentorship():
+    # Connect to the database and fetch mentorship programs
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+    
+    # Correct table name is 'mentorships'
+    cursor.execute("SELECT * FROM mentorships")
+    mentorship_programs = cursor.fetchall()  # Fetch all mentorships
+    
+    cursor.close()
+    connection.close()
+
+    # Render the template with dynamic data
+    return render_template('mentorship.html', mentorship_programs=mentorship_programs)
+
+@app.route('/startup_networking')
+def startup_networking():
+    connection = get_database_connection()
+    cursor = connection.cursor(dictionary=True)  # Use dictionary=True for easier access to column names
+    cursor.execute("SELECT * FROM startups")
+    startups = cursor.fetchall()
+    cursor.close()
+    connection.close()
+
+    # Pass the startups data to the template
+    return render_template('startup_networking.html', startups=startups)
 
 if __name__ == "__main__":
     app.run(debug=True)

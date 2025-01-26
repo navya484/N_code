@@ -112,22 +112,13 @@
     <section class="startups">
         <h2>Startups Looking for Collaborators</h2>
         <div id="startup-list" class="startup-list">
-            <!-- Dynamically generate startup cards -->
+            
             <div class="startup-card">
-                <h3>Tech Innovators</h3>
-                <p>A tech startup focusing on AI-driven solutions for healthcare.</p>
-                <button class="join-startup" data-startup="Tech Innovators">Join Request</button>
+                <h3>{{ startup.name }}</h3>
+                <p>{{ startup.description }}</p>
+                <button class="join-startup" data-startup="{{ startup.name }}">Join Request</button>
             </div>
-            <div class="startup-card">
-                <h3>Green Solutions</h3>
-                <p>A sustainability startup aiming to revolutionize waste management.</p>
-                <button class="join-startup" data-startup="Green Solutions">Join Request</button>
-            </div>
-            <div class="startup-card">
-                <h3>HealthCare 360</h3>
-                <p>Startup focused on creating innovative healthcare applications.</p>
-                <button class="join-startup" data-startup="HealthCare 360">Join Request</button>
-            </div>
+          
         </div>
     </section>
 
@@ -135,16 +126,13 @@
         <h2>Collaborative Boards</h2>
         <button id="join-board">Join a Collaborative Board</button>
         <div id="boards-list" class="boards-list">
+            
             <div class="board-card">
-                <h3>Tech Innovators Board</h3>
-                <p>Collaborate with professionals in the tech field to drive innovation.</p>
+                <h3>{{ board.name }}</h3>
+                <p>{{ board.description }}</p>
                 <button class="join-board-button">Join Board</button>
             </div>
-            <div class="board-card">
-                <h3>Sustainability Innovators Board</h3>
-                <p>A place for sustainability experts to collaborate on projects.</p>
-                <button class="join-board-button">Join Board</button>
-            </div>
+          
         </div>
     </section>
 
